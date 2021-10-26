@@ -13,7 +13,7 @@ namespace MainProject
             ImageFolder = Console.ReadLine();
 
             PictPredClass obj = new PictPredClass();
-            await foreach (var processResult in obj.SecondMethod(ImageFolder))
+            await foreach (var processResult in obj.FindNames(ImageFolder))
                 Console.WriteLine(processResult);
 
         }

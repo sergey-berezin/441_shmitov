@@ -25,6 +25,8 @@ namespace MainLib
 
         const string imageOutputFolder = "/Users/lucius/Desktop/ber_lab_1/YOLOv4MLNet/YOLOv4MLNet/Assets/Output";
 
+        private CancellationTokenSource cancellationTokenSource;
+
         static readonly string[] classesNames = new string[] { "person", "bicycle", "car", "motorbike",
             "aeroplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop sign",
             "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear",
@@ -38,14 +40,14 @@ namespace MainLib
 
         public PictPredClass()
         {
-            model = MainMethod();
+            model = ModelRecognition();
             Results = new BlockingCollection<SummaryClass>();
         }
 
         private BlockingCollection<SummaryClass> Results;
         private TransformerChain<OnnxTransformer> model;
 
-        public TransformerChain<OnnxTransformer> MainMethod()
+        public TransformerChain<OnnxTransformer> ModelRecognition()
         {
             MLContext mlContext = new MLContext();
 
@@ -81,21 +83,26 @@ namespace MainLib
 
         public string ImageOutputFolder { get; private set; }
 
-        public async IAsyncEnumerable<SummaryClass> SecondMethod(string dir)
+        public void CancellationToken()
         {
-            Console.WriteLine("1  "+dir);
+            cancellationTokenSource.Cancel();
+        }
+
+        public async IAsyncEnumerable<SummaryClass> FindNames(string dir)
+        {
+ 
             ImageOutputFolder = Path.Combine(dir, "OutputFolder");
             Directory.CreateDirectory(ImageOutputFolder);
 
             List<Task<SummaryClass>> processors = new List<Task<SummaryClass>>();
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
 
             foreach (string imageName in Directory.GetFiles(dir))
             {
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    Console.WriteLine("2  "+imageName);
+
                     Task<SummaryClass> task = PictTask(imageName);
                     processors.Add(task);
                 }
@@ -118,13 +125,13 @@ namespace MainLib
 
         public async Task<SummaryClass> PictTask(string imageName)
         {
-            Console.WriteLine("3  " + imageName);
+
             return await Task.Factory.StartNew(() =>
             {
                 var labels = TakeNames(imageName);
                 SummaryClass Result = new SummaryClass();
                 Result.Name = imageName.Substring(imageName.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-                Console.WriteLine("4  " + Result.Name);
+
                 Result.CatNames = labels;
                 Results.Add(Result);
                 return Result;
@@ -133,7 +140,7 @@ namespace MainLib
 
         private IReadOnlyList<string> TakeNames(string imageName)
         {
-            Console.WriteLine("5  " + imageName);
+
             List<string> Names = new List<string>();
 
             MLContext mlContext = new MLContext();
