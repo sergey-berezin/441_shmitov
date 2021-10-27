@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{DC4A74C8-8658-486F-B77D-4645DF602A8B}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainLib/PictPred.cs">
+    <Files>
+      <File FileName="Lab1/Program.cs" Line="18" Column="1" />
+      <File FileName="MainLib/SummaryClass.cs" Line="1" Column="1" />
+      <File FileName="MainLib/PictPred.cs" Line="15" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Lab1" expanded="True">
+            <Node name="MainLib" expanded="True">
+              <Node name="PictPred.cs" selected="True" />
+            </Node>
+            <Node name="MainProject" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.MainProject PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
